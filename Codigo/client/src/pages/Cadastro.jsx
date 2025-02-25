@@ -101,7 +101,7 @@ const Cadastro = () => {
         };
 
         const telFormatado = values.tel.replace(/[^0-9()-\s]/g, '').slice(0, 15);
-        const CPFFormatado = values.CPF.replace(/[^0-9.-]/g, '').slice(0, 14);
+        const CPFFormatado = values.cpf.replace(/[^0-9.-]/g, '').slice(0, 14);
 
         const contribuicoesFinal = [...formData.contribuicoes];
         if (outrosContribuicao) {
@@ -113,7 +113,7 @@ const Cadastro = () => {
             email: values.email,
             senha: values.senha,
             dataNascimento: values.dataNascimento,
-            CPF: CPFFormatado,
+            cpf: CPFFormatado,
             tel: telFormatado,
             endereco,
             voluntario: isVoluntario,

@@ -126,7 +126,7 @@ const Formulario = () => {
       "%0a" +
       "*Nome*: " + usuario.nome + "%0a" +
       "*Idade*: " + idade + " anos" + "%0a" +
-      "*CPF*: " + usuario.CPF + "%0a" +
+      "*CPF*: " + usuario.cpf + "%0a" +
       "*Endereço*: " + enderecoCompleto + "%0a" +
       "*Telefone*: " + usuario.tel + "%0a" +
       "*Email*: " + usuario.email + "%0a" +

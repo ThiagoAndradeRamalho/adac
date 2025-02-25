@@ -188,7 +188,7 @@ const Perfil = () => {
                   <label><strong>Telefone:</strong></label>
                   <Input name="tel" value={userData.tel || ''} disabled={!isEditing} onChange={handleInputChange} />
                   <label><strong>CPF:</strong></label>
-                  <Input name="cpf" value={userData.CPF || ''} disabled={!isEditing} onChange={handleInputChange} />
+                  <Input name="cpf" value={userData.cpf || ''} disabled={!isEditing} onChange={handleInputChange} />
                   <label><strong>Data de Nascimento:</strong></label>
                   <Input name="dataNascimento" value={formatDate(userData.dataNascimento || '')} disabled={!isEditing} onChange={handleInputChange} />
                </div>
