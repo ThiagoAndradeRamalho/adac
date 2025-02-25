@@ -29,7 +29,7 @@ const FeedbackList = () => {
   // Função para buscar feedbacks
   const fetchFeedbacks = async () => {
     try {
-      const response = await fetch('https://adacc.onrender.com0/api/feedback', {
+      const response = await fetch('https://adacc.onrender.com/api/feedback', {
         method: 'GET',
       });
       if (response.ok) {
@@ -50,7 +50,7 @@ const FeedbackList = () => {
   // Função para deletar um feedback
   const deleteFeedback = async (id) => {
     try {
-      const response = await fetch(`https://adacc.onrender.com0/api/feedback/${id}`, {
+      const response = await fetch(`https://adacc.onrender.com/api/feedback/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {

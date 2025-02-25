@@ -10,7 +10,7 @@ const PatrocinioSection = () => {
 
   const fetchPatrocinios = async () => {
     try {
-      const response = await fetch('https://adacc.onrender.com0/api/patrocinio', { method: 'GET' });
+      const response = await fetch('https://adacc.onrender.com/api/patrocinio', { method: 'GET' });
       if (response.ok) {
         const data = await response.json();
         setPatrocinios(data);

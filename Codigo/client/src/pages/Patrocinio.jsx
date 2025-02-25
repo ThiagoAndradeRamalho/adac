@@ -16,7 +16,7 @@ const Patrocinio = () => {
     useEffect(() => {
         async function fetchPatrocinios() {
             try {
-                const response = await fetch("https://adacc.onrender.com1/api/patrocinio", {
+                const response = await fetch("https://adacc.onrender.com/api/patrocinio", {
                     method: 'GET',
                 });
                 if (response.ok) {
@@ -65,8 +65,8 @@ const Patrocinio = () => {
 
         try {
             const url = currentPatrocinio
-                ? `https://adacc.onrender.com1/api/patrocinio/${currentPatrocinio.id}`
-                : 'https://adacc.onrender.com1/api/patrocinio';
+                ? `https://adacc.onrender.com/api/patrocinio/${currentPatrocinio.id}`
+                : 'https://adacc.onrender.com/api/patrocinio';
 
             const method = currentPatrocinio ? 'PUT' : 'POST';
 
@@ -100,7 +100,7 @@ const Patrocinio = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`https://adacc.onrender.com1/api/patrocinio/${id}`, {
+            const response = await fetch(`https://adacc.onrender.com/api/patrocinio/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {

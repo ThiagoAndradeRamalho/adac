@@ -18,7 +18,7 @@ const VolunteerComponent = ({ searchText }) => {
     useEffect(() => {
         const fetchVoluntarios = async () => {
             try {
-                const response = await axios.get('https://adacc.onrender.com0/api/usuario/voluntarios');
+                const response = await axios.get('https://adacc.onrender.com/api/usuario/voluntarios');
                 setVoluntarios(response.data);
                 setFilteredVolunteers(response.data);
                 setLoading(false);
@@ -34,7 +34,7 @@ const VolunteerComponent = ({ searchText }) => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://adacc.onrender.com0/api/usuario/${id}/voluntario`);
+            await axios.delete(`https://adacc.onrender./api/usuario/${id}/voluntario`);
             setVoluntarios((prevVoluntarios) =>
                 prevVoluntarios.filter((voluntario) => voluntario.id !== id)
             );

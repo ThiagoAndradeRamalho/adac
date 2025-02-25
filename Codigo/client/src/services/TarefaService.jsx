@@ -1,4 +1,4 @@
-const API_URL = "https://adacc.onrender.com1/api/tarefa";
+const API_URL = "https://adacc.onrender.com/api/tarefa";
 
 export const TarefaService = {
   async addTarefa(novaTarefa, usuariosIds) {
@@ -62,7 +62,7 @@ export const TarefaService = {
 
   async fetchUsuarios() {
     try {
-      const response = await fetch("https://adacc.onrender.com1/api/usuario");
+      const response = await fetch("https://adacc.onrender.com/api/usuario");
       if (!response.ok) {
         throw new Error("Erro ao buscar usuários");
       }

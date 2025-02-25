@@ -32,7 +32,7 @@ const Pets = () => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await fetch("https://adacc.onrender.com1/api/pet");
+        const response = await fetch("https://adacc.onrender.com/api/pet");
         if (!response.ok) {
           throw new Error("Erro ao buscar os pets");
         }
@@ -117,7 +117,7 @@ const Pets = () => {
                     cover={
                       <div>
                         <img
-                          src={`https://adacc.onrender.com1/${pet.img}`}
+                          src={`https://adacc.onrender.com/${pet.img}`}
                           alt={pet.nome}
                           style={{ height: "200px", width: "100%", objectFit: "contain", marginTop: "1vw" }}
                         />

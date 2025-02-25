@@ -39,7 +39,7 @@ const CadastroVoluntario = () => {
         };
 
         try {
-            const response = await fetch(`https://adacc.onrender.com1/api/usuario/${id}/voluntario`, {
+            const response = await fetch(`https://adacc.onrender.com/api/usuario/${id}/voluntario`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

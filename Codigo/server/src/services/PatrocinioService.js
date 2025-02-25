@@ -37,7 +37,7 @@ export class PatrocinioService {
             //     throw new Error("Patrocínio já cadastrado.");
             // }
 
-            const fullImgUrl = imgUrl.startsWith('http') ? imgUrl : `https://adacc.onrender.com0/${imgUrl}`;
+            const fullImgUrl = imgUrl.startsWith('http') ? imgUrl : `https://adacc.onrender.com/${imgUrl}`;
 
             const patrocinio =  await prismaClient.patrocinio.create({
                 data: { ...data, img: fullImgUrl },
@@ -87,7 +87,7 @@ export class PatrocinioService {
     
         if (img) {
 
-            const fullImgUrl = img.startsWith('http') ? img : `https://adacc.onrender.com0/${img}`;
+            const fullImgUrl = img.startsWith('http') ? img : `https://adacc.onrender.com/${img}`;
 
             updatedData.img = fullImgUrl;
         }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://adacc.onrender.com1/api/eventos';
+const API_URL = 'https://adacc.onrender.com/api/eventos';
 
 class EventoService {
 
