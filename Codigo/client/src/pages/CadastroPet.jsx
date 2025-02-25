@@ -96,7 +96,7 @@ const CadastroPet = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/pet', {
+            const response = await fetch('https://adacc.onrender.com0/api/pet', {
                 method: 'POST',
                 body: formDataToSend,
             });
