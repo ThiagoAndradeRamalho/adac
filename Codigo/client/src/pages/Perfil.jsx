@@ -19,7 +19,7 @@ const Perfil = () => {
       nome: '',
       email: '',
       tel: '',
-      CPF: '',
+      cpf: '',
       dataNascimento: '',
       endereco: {
          cep: '',
@@ -66,7 +66,7 @@ const Perfil = () => {
             nome: userData.nome,
             email: userData.email,
             tel: userData.tel.replace(/[^0-9]/g, ''),
-            CPF: userData.CPF.replace(/[^0-9]/g, ''),
+            cpf: userData.cpf.replace(/[^0-9]/g, ''),
             dataNascimento: formattedDate,
             endereco: {
                cep: userData.endereco.cep,
@@ -188,7 +188,7 @@ const Perfil = () => {
                   <label><strong>Telefone:</strong></label>
                   <Input name="tel" value={userData.tel || ''} disabled={!isEditing} onChange={handleInputChange} />
                   <label><strong>CPF:</strong></label>
-                  <Input name="CPF" value={userData.CPF || ''} disabled={!isEditing} onChange={handleInputChange} />
+                  <Input name="cpf" value={userData.CPF || ''} disabled={!isEditing} onChange={handleInputChange} />
                   <label><strong>Data de Nascimento:</strong></label>
                   <Input name="dataNascimento" value={formatDate(userData.dataNascimento || '')} disabled={!isEditing} onChange={handleInputChange} />
                </div>

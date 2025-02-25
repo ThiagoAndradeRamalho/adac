@@ -15,7 +15,7 @@ const Cadastro = () => {
     const [form] = Form.useForm();
     const [isVoluntario, setIsVoluntario] = useState(false);
     const [formData, setFormData] = useState({
-        CPF: '',
+        cpf: '',
         nome: '',
         email: '',
         tel: '',
@@ -260,15 +260,15 @@ const Cadastro = () => {
                     <Row gutter={24}>
                         <Col span={12}>
                             <Form.Item
-                                label="CPF"
-                                name="CPF"
+                                label="cpf"
+                                name="cpf"
                                 className='campos'
                                 rules={[{ required: true, message: 'Por favor, insira seu CPF!' }]}
                             >
                                 <InputMask
                                     mask="999.999.999-99"
-                                    value={formData.CPF}
-                                    onChange={(e) => handleChange('CPF', e.target.value)}
+                                    value={formData.cpf}
+                                    onChange={(e) => handleChange('cpf', e.target.value)}
                                 >
                                     {(inputProps) => <Input {...inputProps} placeholder="Digite seu CPF" />}
                                 </InputMask>

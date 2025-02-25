@@ -133,6 +133,8 @@ export class UsuarioService {
             const isoDate = convertToISODate(dataNascimento);
 
             console.log(isoDate);
+
+            console.log('cpfssss',usuarioData.cpf);
     
             const novoUsuario = await prismaClient.usuario.create({
                 data: {
