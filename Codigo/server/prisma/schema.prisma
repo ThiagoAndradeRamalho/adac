@@ -7,18 +7,131 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ENUMS
-enum StatusAdocao {
-  PENDENTE
-  APROVADA
-  RECUSADA
-  EM_ANDAMENTO
+model endereco {
+  id          Int      @id @default(autoincrement())
+  cep         String   @db.VarChar(20)
+  logradouro  String   @db.VarChar(255)
+  numero      String   @db.VarChar(50)
+  complemento String?  @db.VarChar(255)
+  bairro      String   @db.VarChar(100)
+  cidade      String   @db.VarChar(100)
+  estado      String   @db.VarChar(50)
+  usuarioid   Int?     @unique
+  usuario     usuario? @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-enum UsuarioTipo {
-  CLIENTE
-  VOLUNTARIO
-  ADMIN
+model infovoluntario {
+  id              Int      @id @default(autoincrement())
+  tempodisponivel String
+  contribuicoes   String
+  profissao       String   @db.VarChar(255)
+  usuarioid       Int?     @unique
+  usuario         usuario? @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model tarefa {
+  id             Int              @id @default(autoincrement())
+  titulo         String           @db.VarChar(255)
+  descricao      String
+  datacriada     DateTime         @db.Timestamp(6)
+  ordem          Int
+  status         tarefa_status
+  usuario_tarefa usuario_tarefa[]
+
+  @@map("tarefa")
+}
+
+model usuario {
+  id               Int              @id @default(autoincrement())
+  cpf              String           @unique @db.VarChar(14)
+  datanascimento   DateTime         @db.Timestamp(6)
+  nome             String           @db.VarChar(255)
+  email            String           @unique @db.VarChar(255)
+  tel              String           @db.VarChar(20)
+  senha            String           @db.VarChar(255)
+  senha_salt       String           @db.VarChar(255)
+  resettoken       String?          @default("") @db.VarChar(255)
+  resettokenexpiry DateTime?        @default(now()) @db.Timestamp(6)
+  tipo             usuariotipo?     @default(CLIENTE)
+  adocao           adocao[]
+  endereco         endereco?
+  infovoluntario   infovoluntario?
+  usuario_tarefa   usuario_tarefa[]
+
+  @@index([email], map: "idx_usuario_email")
+}
+
+model usuario_tarefa {
+  usuarioid Int
+  tarefaid  Int
+  tarefa    tarefa  @relation(fields: [tarefaid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario   usuario @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([usuarioid, tarefaid])
+}
+
+model feedback {
+  id     Int    @id @default(autoincrement())
+  text   String
+  author String @db.VarChar(255)
+}
+
+model patrocinio {
+  id   Int    @id @default(autoincrement())
+  nome String @db.VarChar(255)
+  img  String @db.VarChar(255)
+}
+
+model adocao {
+  id                    Int          @id @default(autoincrement())
+  data                  DateTime     @db.Timestamp(6)
+  status                statusadocao
+  proximoacompanhamento DateTime?    @db.Timestamp(6)
+  petid                 Int?
+  usuarioid             Int?
+  respostasformulario   Json?
+  pet                   pet?         @relation(fields: [petid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  usuario               usuario?     @relation(fields: [usuarioid], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([petid], map: "idx_adocao_pet")
+  @@index([usuarioid], map: "idx_adocao_usuario")
+}
+
+model evento {
+  id                  Int         @id @default(autoincrement())
+  nome                String      @db.VarChar(255)
+  data                DateTime    @db.Timestamp(6)
+  horainicio          String?     @db.VarChar(10)
+  horafim             String?     @db.VarChar(10)
+  tipoevento          tipoevento? @default(Visita)
+  descricao           String?
+  local               String?     @db.VarChar(255)
+  organizador         String?     @db.VarChar(255)
+  numeroparticipantes Int?
+  color               String?     @default("#e6f7ff") @db.VarChar(7)
+  url                 String?     @db.VarChar(255)
+}
+
+model pet {
+  id                   Int       @id @default(autoincrement())
+  nome                 String    @db.VarChar(255)
+  idade                Int
+  sexo                 String    @db.VarChar(50)
+  porte                String    @db.VarChar(50)
+  deficiencia          String    @db.VarChar(255)
+  descricaodeficiencia String?
+  comportamento        String
+  img                  String    @db.VarChar(255)
+  cor                  String    @db.VarChar(50)
+  peso                 Float
+  raca                 String    @db.VarChar(100)
+  especie              String    @db.VarChar(100)
+  protetor             String?   @db.VarChar(255)
+  dataresgate          DateTime? @db.Timestamp(6)
+  historico            String?
+  conclusoes           String?
+  exameclinico         String?
+  adocao               adocao[]
 }
 
 enum tarefa_status {
@@ -28,139 +141,21 @@ enum tarefa_status {
   CONCLUIDO
 }
 
-enum TipoEvento {
+enum statusadocao {
+  PENDENTE
+  APROVADA
+  RECUSADA
+  EM_ANDAMENTO
+}
+
+enum tipoevento {
   Evento
   Feira
   Visita
 }
 
-// MODELS
-model Adocao {
-  id                    Int          @id @default(autoincrement())
-  data                  DateTime
-  status                StatusAdocao
-  proximoAcompanhamento DateTime?
-  petId                 Int
-  usuarioId             Int
-  respostasFormulario   Json?        
-
-  usuario usuario @relation("UsuarioAdocoes", fields: [usuarioId], references: [id])
-  pet     Pet     @relation("PetAdocoes", fields: [petId], references: [id])
-
-  @@index([petId], map: "Index_Adocao_PetId")
-  @@index([usuarioId], map: "Index_Adocao_UsuarioId")
-}
-
-
-model endereco {
-  id          Int      @id @default(autoincrement())
-  cep         String    @db.VarChar(20)
-  logradouro  String
-  numero      String
-  complemento String?
-  bairro      String
-  cidade      String
-  estado      String
-  usuarioId   Int?     @unique(map: "Endereco_usuarioId_key")
-  usuario     usuario? @relation(fields: [usuarioId], references: [id], map: "Endereco_usuarioId_fkey")
-}
-
-model infovoluntario {
-  id              Int      @id @default(autoincrement())
-  tempoDisponivel String   @db.Text
-  contribuicoes   String
-  profissao       String
-  usuarioId       Int?     @unique(map: "InfoVoluntario_usuarioId_key")
-  usuario         usuario? @relation(fields: [usuarioId], references: [id], onDelete: Cascade, map: "InfoVoluntario_usuarioId_fkey")
-}
-
-model tarefa {
-  id             Int              @id @default(autoincrement())
-  titulo         String
-  descricao      String
-  dataCriada     DateTime
-  ordem          Int
-  status         tarefa_status
-  usuario_tarefa usuario_tarefa[]
-  pets           Pet[]
-
-  @@map("tarefa")
-}
-
-model usuario {
-  id               Int              @id @default(autoincrement())
-  CPF              String           @unique(map: "Usuario_CPF_key")
-  dataNascimento   DateTime
-  nome             String
-  email            String           @unique
-  tel              String
-  senha            String           @db.VarChar(255)
-  senha_salt       String           @db.VarChar(255)
-  resetToken       String           @default("") @db.VarChar(255)
-  resetTokenExpiry DateTime         @default(now())
-  tipo             UsuarioTipo      @default(CLIENTE)
-  adocao           Adocao[]         @relation("UsuarioAdocoes")
-  endereco         endereco?
-  infovoluntario   infovoluntario?
-  usuario_tarefa   usuario_tarefa[]
-}
-
-model Pet {
-  id                   Int       @id @default(autoincrement())
-  nome                 String
-  idade                Int
-  sexo                 String
-  porte                String
-  deficiencia          String
-  descricaoDeficiencia String?
-  comportamento        String
-  img                  String
-  cor                  String
-  peso                 Float
-  raca                 String
-  especie              String
-  protetor             String?
-  dataResgate          DateTime?
-  historico            String?
-  conclusoes           String?
-  exameClinico         String?
-
-  adocoes Adocao[] @relation("PetAdocoes")
-  tarefas tarefa[]
-}
-
-model usuario_tarefa {
-  usuarioId Int
-  tarefaId  Int
-  tarefa    tarefa  @relation(fields: [tarefaId], references: [id], map: "Usuario_Tarefa_tarefaId_fkey", onDelete: Cascade)
-  usuario   usuario @relation(fields: [usuarioId], references: [id], map: "Usuario_Tarefa_usuarioId_fkey", onDelete: Cascade)
-
-  @@id([usuarioId, tarefaId])
-}
-
-model Evento {
-  id                  Int        @id @default(autoincrement())
-  nome                String
-  data                DateTime
-  horaInicio          String?
-  horaFim             String?
-  tipoEvento          TipoEvento @default(Visita)
-  descricao           String?
-  local               String?
-  organizador         String?
-  numeroParticipantes Int?
-  color               String?    @default("#e6f7ff")
-  url                 String?
-}
-
-model feedback {
-  id     Int    @id @default(autoincrement())
-  text   String @db.Text
-  author String
-}
-
-model patrocinio {
-  id   Int    @id @default(autoincrement())
-  nome String
-  img  String
+enum usuariotipo {
+  CLIENTE
+  VOLUNTARIO
+  ADMIN
 }

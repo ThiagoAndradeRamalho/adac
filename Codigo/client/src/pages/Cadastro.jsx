@@ -123,7 +123,7 @@ const Cadastro = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3001/api/usuario', {
+            const response = await fetch('https://adacc.onrender.com/api/usuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -45,7 +45,7 @@ const NovoFeedback = ({ addFeedback, notifySuccess, notifyError }) => {
     };
   
     try {
-      const response = await fetch('http://localhost:3001/api/feedback', {
+      const response = await fetch('https://adacc.onrender.com/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(feedback),
